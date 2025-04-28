@@ -2,7 +2,7 @@
 📦 Contenu du dépôt
 
 ```bash
-checkpoint_ansible/
+AIS-checkpoint-ansible/
 ├── ansible.cfg               # Configuration d'Ansible
 ├── deploy_lamp.yml           # Playbook principal de déploiement
 ├── inventory.yml             # Inventaire des hôtes (YAML)
