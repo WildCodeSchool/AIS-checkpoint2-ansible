@@ -1,0 +1,3 @@
+---
+http_host: "srv-web01.domain.local"
+enable_ssl: false

@@ -1,0 +1,37 @@
+<VirtualHost *:80>
+    ServerName {{ http_host }}
+    DocumentRoot {{ document_root }}
+
+    <Directory {{ document_root }}>
+        Options -Indexes +FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ http_host }}-error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ http_host }}-access.log combined
+
+    {% if enable_ssl %}
+    Redirect permanent / https://{{ http_host }}/
+    {% endif %}
+</VirtualHost>
+
+{% if enable_ssl %}
+<VirtualHost *:443>
+    ServerName {{ http_host }}
+    DocumentRoot {{ document_root }}
+
+    <Directory {{ document_root }}>
+        Options -Indexes +FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    SSLEngine On
+    SSLCertificateFile {{ ssl_certificate_path }}
+    SSLCertificateKeyFile {{ ssl_certificate_key_path }}
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ http_host }}-ssl-error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ http_host }}-ssl-access.log combined
+</VirtualHost>
+{% endif %}

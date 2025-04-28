@@ -1,0 +1,6 @@
+---
+- name: Installer Apache, PHP et MariaDB
+  apt:
+    name: "{{ apache_packages }}"
+    state: present
+    update_cache: yes

@@ -1,0 +1,16 @@
+---
+- name: Créer le répertoire du site Web
+  file:
+    path: "{{ document_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Déployer la page index.html
+  template:
+    src: index.html.j2
+    dest: "{{ document_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: '0644'
