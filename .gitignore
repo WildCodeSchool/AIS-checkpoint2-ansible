@@ -12,3 +12,4 @@ ansible-venv
 pip-selfcheck.json
 .key
 .csr
+.vscode

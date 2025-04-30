@@ -1,6 +1,6 @@
 ---
 - name: Créer les dossiers nécessaires pour les clés, CSR et CNF
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: '0755'
@@ -10,7 +10,7 @@
     - "{{ cnf_dir }}"
 
 - name: Générer la clé privée ECC (prime256v1) pour chaque hôte web
-  command: >
+  ansible.builtin.shell: >
     openssl genpkey -algorithm EC
     -pkeyopt ec_paramgen_curve:prime256v1
     -out {{ key_dir }}/{{ item }}.key
@@ -21,15 +21,16 @@
     label: "{{ item }}"
 
 - name: Générer le fichier .cnf pour chaque hôte web
-  template:
+  ansible.builtin.template:
     src: csr_config.cnf.j2
     dest: "{{ cnf_dir }}/{{ item }}.cnf"
+    mode: '0644'
   loop: "{{ groups['webservers'] }}"
   loop_control:
     label: "{{ item }}"
 
 - name: Générer la CSR en utilisant le fichier .cnf
-  command: >
+  ansible.builtin.shell: >
     openssl req -new
     -key {{ key_dir }}/{{ item }}.key
     -out {{ csr_dir }}/{{ item }}.csr
@@ -41,7 +42,7 @@
     label: "{{ item }}"
 
 - name: Copier la clé privée dans le rôle deploy_static_site
-  copy:
+  ansible.builtin.copy:
     src: "{{ key_dir }}/{{ item }}.key"
     dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.key"
     mode: '0600'
@@ -50,7 +51,7 @@
     label: "{{ item }}"
 
 - name: Copier la CSR dans le rôle deploy_static_site (optionnel)
-  copy:
+  ansible.builtin.copy:
     src: "{{ csr_dir }}/{{ item }}.csr"
     dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.csr"
     mode: '0644'

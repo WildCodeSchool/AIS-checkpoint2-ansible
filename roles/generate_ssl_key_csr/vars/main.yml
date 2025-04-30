@@ -1,14 +1,14 @@
 ---
-key_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/keys"
-csr_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/csr"
-cnf_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/cnf"
+generate_ssl_key_csr_key_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/keys"
+generate_ssl_key_csr_csr_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/csr"
+generate_ssl_key_csr_cnf_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/cnf"
 
-country: "FR"
-locality: "Montpellier"
-organization: "checkpoint2.local"
-domain: "checkpoint2.local"
+generate_ssl_key_csr_country: "FR"
+generate_ssl_key_csr_locality: "Montpellier"
+generate_ssl_key_csr_organization: "checkpoint2.local"
+generate_ssl_key_csr_domain: "checkpoint2.local"
 
 # Valeurs SAN pour chaque hôte (peut être surchargé en host_vars si besoin)
-subject_alt_names:
+generate_ssl_key_csr_subject_alt_names:
   - "{{ inventory_hostname }}.{{ domain }}"
   - "{{ inventory_hostname }}"
