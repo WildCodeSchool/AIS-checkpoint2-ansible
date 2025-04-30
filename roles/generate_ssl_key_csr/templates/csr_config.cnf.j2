@@ -11,6 +11,6 @@ CN = {{ inventory_hostname }}.{{ domain }}
 emailAddress={{ generate_ssl_key_csr_email_prefix }}@{{ generate_ssl_key_csr_domain }}
 
 [ req_ext ]
-subjectAltName = {% for name in subject_alt_names -%}
+subjectAltName = {% for name in generate_ssl_key_csr_subject_alt_names -%}
 DNS:{{ name }}{{ "," if not loop.last else "" }}
 {%- endfor %}

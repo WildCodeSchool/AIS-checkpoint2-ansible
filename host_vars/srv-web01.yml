@@ -1,0 +1,4 @@
+---
+generate_ssl_key_csr_subject_alt_names:
+  - srv-web01.checkpoint2.local
+  - www.checkpoint2.local
