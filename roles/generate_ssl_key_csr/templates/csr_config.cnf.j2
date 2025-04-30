@@ -8,6 +8,7 @@ C = {{ country }}
 L = {{ locality }}
 O = {{ organization }}
 CN = {{ inventory_hostname }}.{{ domain }}
+emailAddress={{ generate_ssl_key_csr_email_prefix }}@{{ generate_ssl_key_csr_domain }}
 
 [ req_ext ]
 subjectAltName = {% for name in subject_alt_names -%}

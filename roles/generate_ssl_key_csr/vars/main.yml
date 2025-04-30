@@ -7,8 +7,10 @@ generate_ssl_key_csr_country: "FR"
 generate_ssl_key_csr_locality: "Montpellier"
 generate_ssl_key_csr_organization: "checkpoint2.local"
 generate_ssl_key_csr_domain: "checkpoint2.local"
+generate_ssl_key_csr_email_prefix: "prenom"
+
 
 # Valeurs SAN pour chaque hôte (peut être surchargé en host_vars si besoin)
 generate_ssl_key_csr_subject_alt_names:
-  - "{{ inventory_hostname }}.{{ domain }}"
+  - "{{ inventory_hostname }}.{{ generate_ssl_key_csr_domain }}"
   - "{{ inventory_hostname }}"
