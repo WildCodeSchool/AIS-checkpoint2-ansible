@@ -1,0 +1,59 @@
+---
+- name: Créer les dossiers nécessaires pour les clés, CSR et CNF
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ key_dir }}"
+    - "{{ csr_dir }}"
+    - "{{ cnf_dir }}"
+
+- name: Générer la clé privée ECC (prime256v1) pour chaque hôte web
+  command: >
+    openssl genpkey -algorithm EC
+    -pkeyopt ec_paramgen_curve:prime256v1
+    -out {{ key_dir }}/{{ item }}.key
+  args:
+    creates: "{{ key_dir }}/{{ item }}.key"
+  loop: "{{ groups['webservers'] }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Générer le fichier .cnf pour chaque hôte web
+  template:
+    src: csr_config.cnf.j2
+    dest: "{{ cnf_dir }}/{{ item }}.cnf"
+  loop: "{{ groups['webservers'] }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Générer la CSR en utilisant le fichier .cnf
+  command: >
+    openssl req -new
+    -key {{ key_dir }}/{{ item }}.key
+    -out {{ csr_dir }}/{{ item }}.csr
+    -config {{ cnf_dir }}/{{ item }}.cnf
+  args:
+    creates: "{{ csr_dir }}/{{ item }}.csr"
+  loop: "{{ groups['webservers'] }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Copier la clé privée dans le rôle deploy_static_site
+  copy:
+    src: "{{ key_dir }}/{{ item }}.key"
+    dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.key"
+    mode: '0600'
+  loop: "{{ groups['webservers'] }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Copier la CSR dans le rôle deploy_static_site (optionnel)
+  copy:
+    src: "{{ csr_dir }}/{{ item }}.csr"
+    dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.csr"
+    mode: '0644'
+  loop: "{{ groups['webservers'] }}"
+  loop_control:
+    label: "{{ item }}"

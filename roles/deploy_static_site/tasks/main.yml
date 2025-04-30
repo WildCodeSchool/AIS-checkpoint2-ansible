@@ -1,0 +1,72 @@
+---
+- name: Installer Apache2
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+    update_cache: true
+
+- name: Activer et démarrer Apache2
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: true
+
+- name: Copier la clé privée SSL (si SSL activé)
+  when: enable_ssl
+  ansible.builtin.copy:
+    src: "{{ inventory_hostname }}.key"
+    dest: "{{ ssl_certificate_key_path }}"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Copier le certificat SSL (si SSL activé)
+  when: enable_ssl
+  ansible.builtin.copy:
+    src: "{{ inventory_hostname }}.crt"
+    dest: "{{ ssl_certificate_path }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Activer le module SSL Apache (si nécessaire)
+  when: enable_ssl
+  apache2_module:
+    name: ssl
+    state: present
+
+- name: Créer le répertoire du site web
+  ansible.builtin.file:
+    path: "{{ document_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Déployer le VirtualHost Apache
+  ansible.builtin.template:
+    src: vhost.conf.j2
+    dest: "/etc/apache2/sites-available/{{ http_host }}.conf"
+    mode: '0644'
+  notify: Reload Apache
+
+- name: Activer le site Apache
+  ansible.builtin.file:
+    src: "/etc/apache2/sites-available/{{ http_host }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ http_host }}.conf"
+    state: link
+  notify: Reload Apache
+
+- name: Supprimer le site par défaut Apache
+  ansible.builtin.file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify: Reload Apache
+
+- name: Déployer la page index.html
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ document_root }}/index.html"
+    owner: www-data
+    group: www-data
+    mode: '0644'

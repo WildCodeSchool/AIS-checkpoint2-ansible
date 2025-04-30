@@ -1,9 +1,0 @@
----
-- name: Activer et démarrer Apache et MariaDB
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  loop:
-    - apache2
-    - mariadb

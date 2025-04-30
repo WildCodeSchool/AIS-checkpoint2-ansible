@@ -1,0 +1,11 @@
+all:
+  children:
+    webservers:
+      hosts:
+        srv-web01:
+          ansible_host: "IP_DE_TON_SERVEUR"
+          ansible_user: "wilder"
+        srv-web02:
+    controlnode:
+      hosts:
+        controlnode

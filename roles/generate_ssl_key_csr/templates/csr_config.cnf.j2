@@ -1,0 +1,15 @@
+[ req ]
+prompt = no
+distinguished_name = dn
+req_extensions = req_ext
+
+[ dn ]
+C = {{ country }}
+L = {{ locality }}
+O = {{ organization }}
+CN = {{ inventory_hostname }}.{{ domain }}
+
+[ req_ext ]
+subjectAltName = {% for name in subject_alt_names -%}
+DNS:{{ name }}{{ "," if not loop.last else "" }}
+{%- endfor %}
