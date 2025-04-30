@@ -1,4 +1,13 @@
 ---
+# Permet de définir les extentions du certificat,
+# permet de préciser les noms de domaine ou alias
+# supplémentaires pour lesquels le certificat sera valide
+# host_vars/srv-web01.yml
+generate_ssl_key_csr_country: "FR"
+generate_ssl_key_csr_locality: "Montpellier"
+generate_ssl_key_csr_organization: "checkpoint2.local"
+generate_ssl_key_csr_organizational_unit: "WEB"
+generate_ssl_key_csr_domain: "checkpoint2.local"
 generate_ssl_key_csr_subject_alt_names:
   - srv-web01.checkpoint2.local
-  - www.checkpoint2.local
+  - srv-web01

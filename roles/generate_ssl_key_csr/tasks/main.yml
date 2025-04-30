@@ -1,40 +1,70 @@
 ---
+- name: Créer le dossier cible dans deploy_static_site si nécessaire
+  ansible.builtin.file:
+    path: "{{ playbook_dir }}/roles/deploy_static_site/files"
+    state: directory
+    mode: '0755'
+
 - name: Créer les dossiers nécessaires pour les clés, CSR et CNF
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: '0755'
   loop:
-    - "{{ key_dir }}"
-    - "{{ csr_dir }}"
-    - "{{ cnf_dir }}"
+    - "{{ generate_ssl_key_csr_key_dir }}"
+    - "{{ generate_ssl_key_csr_csr_dir }}"
+    - "{{ generate_ssl_key_csr_cnf_dir }}"
+
+- name: Précharger les hostvars de tous les webservers (hack pour rendre hostvars[item] accessible)
+  ansible.builtin.set_fact:
+    preload: "{{ hostvars[item] }}"
+  with_items: "{{ groups['webservers'] }}"
+  delegate_to: localhost
+  run_once: true
 
 - name: Générer la clé privée ECC (prime256v1) pour chaque hôte web
   ansible.builtin.shell: >
     openssl genpkey -algorithm EC
     -pkeyopt ec_paramgen_curve:prime256v1
-    -out {{ key_dir }}/{{ item }}.key
+    -out {{ generate_ssl_key_csr_key_dir }}/{{ item }}.key
   args:
-    creates: "{{ key_dir }}/{{ item }}.key"
+    creates: "{{ generate_ssl_key_csr_key_dir }}/{{ item }}.key"
   loop: "{{ groups['webservers'] }}"
   loop_control:
     label: "{{ item }}"
+
+#- name: Générer le fichier .cnf pour chaque hôte web
+#  ansible.builtin.template:
+#    src: csr_config.cnf.j2
+#    dest: "{{ generate_ssl_key_csr_cnf_dir }}/{{ item }}.cnf"
+#    mode: '0644'
+#  loop: "{{ groups['webservers'] }}"
+#  loop_control:
+#    label: "{{ item }}"
 
 - name: Générer le fichier .cnf pour chaque hôte web
   ansible.builtin.template:
     src: csr_config.cnf.j2
-    dest: "{{ cnf_dir }}/{{ item }}.cnf"
+    dest: "{{ generate_ssl_key_csr_cnf_dir }}/{{ item }}.cnf"
     mode: '0644'
   loop: "{{ groups['webservers'] }}"
   loop_control:
     label: "{{ item }}"
+  vars:
+    generate_ssl_key_csr_subject_alt_names: "{{ hostvars[item].generate_ssl_key_csr_subject_alt_names }}"
+    generate_ssl_key_csr_country: "{{ hostvars[item].generate_ssl_key_csr_country | default('FR') }}"
+    generate_ssl_key_csr_locality: "{{ hostvars[item].generate_ssl_key_csr_locality | default('Montpellier') }}"
+    generate_ssl_key_csr_organization: "{{ hostvars[item].generate_ssl_key_csr_organization | default('checkpoint2.local') }}"
+    generate_ssl_key_csr_organizational_unit: "{{ hostvars[item].generate_ssl_key_csr_organizational_unit | default('WEB') }}"
+    generate_ssl_key_csr_domain: "{{ hostvars[item].generate_ssl_key_csr_domain | default('checkpoint2.local') }}"
+
 
 - name: Générer la CSR en utilisant le fichier .cnf
   ansible.builtin.shell: >
     openssl req -new
-    -key {{ key_dir }}/{{ item }}.key
-    -out {{ csr_dir }}/{{ item }}.csr
-    -config {{ cnf_dir }}/{{ item }}.cnf
+    -key {{ generate_ssl_key_csr_key_dir }}/{{ item }}.key
+    -out {{ generate_ssl_key_csr_csr_dir }}/{{ item }}.csr
+    -config {{ generate_ssl_key_csr_cnf_dir }}/{{ item }}.cnf
   args:
     creates: "{{ csr_dir }}/{{ item }}.csr"
   loop: "{{ groups['webservers'] }}"
@@ -43,7 +73,7 @@
 
 - name: Copier la clé privée dans le rôle deploy_static_site
   ansible.builtin.copy:
-    src: "{{ key_dir }}/{{ item }}.key"
+    src: "{{ generate_ssl_key_csr_key_dir }}/{{ item }}.key"
     dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.key"
     mode: '0600'
   loop: "{{ groups['webservers'] }}"
@@ -52,7 +82,7 @@
 
 - name: Copier la CSR dans le rôle deploy_static_site (optionnel)
   ansible.builtin.copy:
-    src: "{{ csr_dir }}/{{ item }}.csr"
+    src: "{{ generate_ssl_key_csr_csr_dir }}/{{ item }}.csr"
     dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.csr"
     mode: '0644'
   loop: "{{ groups['webservers'] }}"

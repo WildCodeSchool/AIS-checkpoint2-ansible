@@ -4,11 +4,11 @@ distinguished_name = dn
 req_extensions = req_ext
 
 [ dn ]
-C = {{ country }}
-L = {{ locality }}
-O = {{ organization }}
-CN = {{ inventory_hostname }}.{{ domain }}
-emailAddress={{ generate_ssl_key_csr_email_prefix }}@{{ generate_ssl_key_csr_domain }}
+C = {{ generate_ssl_key_csr_country }}
+L = {{ generate_ssl_key_csr_locality }}
+O = {{ generate_ssl_key_csr_organization }}
+OU = {{ generate_ssl_key_csr_organizational_unit }}
+CN = {{ item }}.{{ hostvars[item].generate_ssl_key_csr_domain }}
 
 [ req_ext ]
 subjectAltName = {% for name in generate_ssl_key_csr_subject_alt_names -%}

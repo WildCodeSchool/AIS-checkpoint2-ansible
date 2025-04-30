@@ -1,5 +1,7 @@
 ---
 - hosts: webservers
   become: true
+  gather_facts: true
+
   roles:
     - deploy_static_site

@@ -31,7 +31,7 @@
 
 - name: Activer le module SSL Apache (si nécessaire)
   when: enable_ssl
-  apache2_module:
+  ansible.builtin.apache2_module:
     name: ssl
     state: present
 

@@ -3,9 +3,9 @@ all:
     webservers:
       hosts:
         srv-web01:
-          ansible_host: "IP_DE_TON_SERVEUR"
+          ansible_host: "IP du serveur"
           ansible_user: "wilder"
-        srv-web02:
     controlnode:
       hosts:
-        controlnode
+        controlnode:
+          ansible_connection: local

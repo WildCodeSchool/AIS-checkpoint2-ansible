@@ -2,15 +2,3 @@
 generate_ssl_key_csr_key_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/keys"
 generate_ssl_key_csr_csr_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/csr"
 generate_ssl_key_csr_cnf_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/cnf"
-
-generate_ssl_key_csr_country: "FR"
-generate_ssl_key_csr_locality: "Montpellier"
-generate_ssl_key_csr_organization: "checkpoint2.local"
-generate_ssl_key_csr_domain: "checkpoint2.local"
-generate_ssl_key_csr_email_prefix: "prenom"
-
-
-# Valeurs SAN pour chaque hôte (peut être surchargé en host_vars si besoin)
-generate_ssl_key_csr_subject_alt_names:
-  - "{{ inventory_hostname }}.{{ generate_ssl_key_csr_domain }}"
-  - "{{ inventory_hostname }}"

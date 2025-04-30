@@ -1,7 +1,7 @@
 ---
 - name: Générer clé privée et CSR pour le serveur web
   hosts: controlnode
-  gather_facts: false
+  gather_facts: true
   become: false
 
   roles:

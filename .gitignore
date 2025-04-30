@@ -1,4 +1,3 @@
-### venv ###
 .Python
 [Bb]in
 [Ii]nclude
@@ -8,9 +7,13 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
-ansible-venv
+ansible-venv/
 pip-selfcheck.json
 .key
 .csr
-.vscode
-.ansible
+.vscode/
+.ansible/
+*.retry
+*.log
+__pycache__/
+*.pyc

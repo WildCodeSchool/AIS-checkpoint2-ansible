@@ -1,12 +1,7 @@
 ---
 apache_packages:
   - apache2
-  - libapache2-mod-php
-  - php
-  - php-mysql
-  - mariadb-server
-
-document_root: "/var/www/{{ http_host }}"
-ssl_certificate_path: "/etc/ssl/certs/{{ http_host }}.crt"
-ssl_certificate_key_path: "/etc/ssl/private/{{ http_host }}.key"
-enable_ssl: false
+deploy_static_site_document_root: "/var/www/{{ http_host }}"
+deploy_static_site_ssl_certificate_path: "/etc/ssl/certs/{{ http_host }}.crt"
+deploy_static_site_ssl_certificate_key_path: "/etc/ssl/private/{{ http_host }}.key"
+deploy_static_site_enable_ssl: false
