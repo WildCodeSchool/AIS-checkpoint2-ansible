@@ -66,7 +66,7 @@
     -out {{ generate_ssl_key_csr_csr_dir }}/{{ item }}.csr
     -config {{ generate_ssl_key_csr_cnf_dir }}/{{ item }}.cnf
   args:
-    creates: "{{ csr_dir }}/{{ item }}.csr"
+    creates: "{{ generate_ssl_key_csr_csr_dir }}/{{ item }}.csr"
   loop: "{{ groups['webservers'] }}"
   loop_control:
     label: "{{ item }}"
@@ -76,15 +76,6 @@
     src: "{{ generate_ssl_key_csr_key_dir }}/{{ item }}.key"
     dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.key"
     mode: '0600'
-  loop: "{{ groups['webservers'] }}"
-  loop_control:
-    label: "{{ item }}"
-
-- name: Copier la CSR dans le rôle deploy_static_site (optionnel)
-  ansible.builtin.copy:
-    src: "{{ generate_ssl_key_csr_csr_dir }}/{{ item }}.csr"
-    dest: "{{ playbook_dir }}/roles/deploy_static_site/files/{{ item }}.csr"
-    mode: '0644'
   loop: "{{ groups['webservers'] }}"
   loop_control:
     label: "{{ item }}"

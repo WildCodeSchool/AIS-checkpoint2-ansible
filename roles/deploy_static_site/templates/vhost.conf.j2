@@ -11,12 +11,12 @@
     ErrorLog ${APACHE_LOG_DIR}/{{ http_host }}-error.log
     CustomLog ${APACHE_LOG_DIR}/{{ http_host }}-access.log combined
 
-    {% if enable_ssl %}
+    {% if deploy_static_site_enable_ssl %}
     Redirect permanent / https://{{ http_host }}/
     {% endif %}
 </VirtualHost>
 
-{% if enable_ssl %}
+{% if deploy_static_site_enable_ssl %}
 <VirtualHost *:443>
     ServerName {{ http_host }}
     DocumentRoot {{ document_root }}

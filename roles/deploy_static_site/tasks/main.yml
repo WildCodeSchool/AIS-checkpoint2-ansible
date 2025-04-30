@@ -12,7 +12,7 @@
     enabled: true
 
 - name: Copier la clé privée SSL (si SSL activé)
-  when: enable_ssl
+  when: deploy_static_site_enable_ssl
   ansible.builtin.copy:
     src: "{{ inventory_hostname }}.key"
     dest: "{{ ssl_certificate_key_path }}"
@@ -21,7 +21,7 @@
     mode: '0600'
 
 - name: Copier le certificat SSL (si SSL activé)
-  when: enable_ssl
+  when: deploy_static_site_enable_ssl
   ansible.builtin.copy:
     src: "{{ inventory_hostname }}.crt"
     dest: "{{ ssl_certificate_path }}"
@@ -30,7 +30,7 @@
     mode: '0644'
 
 - name: Activer le module SSL Apache (si nécessaire)
-  when: enable_ssl
+  when: deploy_static_site_enable_ssl
   ansible.builtin.apache2_module:
     name: ssl
     state: present

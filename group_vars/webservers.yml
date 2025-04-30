@@ -7,10 +7,6 @@ document_root: "/var/www/html"
 ssl_certificate_path: "/etc/ssl/certs/{{ inventory_hostname }}.crt"
 ssl_certificate_key_path: "/etc/ssl/private/{{ inventory_hostname }}.key"
 
-
-# Activation HTTPS (true/false)
-enable_ssl: false
-
 # Informations personnelles
 student_fullname: "Ton Prénom Ton Nom"
 
