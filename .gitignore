@@ -17,3 +17,8 @@ pip-selfcheck.json
 *.log
 __pycache__/
 *.pyc
+*.csr
+*.crt
+*.key
+*.cnf
+*.log
