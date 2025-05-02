@@ -5,6 +5,7 @@ all:
         srv-web01:
           ansible_host: "IP du serveur"
           ansible_user: "wilder"
+          ansible_ssh_private_key_file: "Le chemin vers ta clé privée SSH" # Si tu n'utilises pas d'agent SSH, sinon, commentes cette ligne
     controlnode:
       hosts:
         controlnode:

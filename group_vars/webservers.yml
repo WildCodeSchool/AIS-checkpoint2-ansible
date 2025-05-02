@@ -1,8 +1,16 @@
 ---
-# Certificats SSL/TLS
+# Ces deux variables définissent les chemins absolus où seront installés (copiés) les certificats SSL et les clés privées sur les serveurs web
 ssl_certificate_path: "/etc/ssl/certs/{{ inventory_hostname }}.crt"
 ssl_certificate_key_path: "/etc/ssl/private/{{ inventory_hostname }}.key"
 
-# Informations personnelles
-student_fullname: "Ton Prénom Ton Nom"
+# Ces variables sont utilisées dans le rôle generate_ssl_key_csr pour générer automatiquement les fichiers `.cnf`
+# nécessaires à la création des **CSR** (Certificate Signing Requests) avec **OpenSSL**.
+# Chaque CSR utilise ces informations génériques.
+generate_ssl_key_csr_country: "FR"
+generate_ssl_key_csr_locality: "TA VILLE"
+generate_ssl_key_csr_organization: "checkpoint2.local"
+generate_ssl_key_csr_organizational_unit: "WEB"
+generate_ssl_key_csr_domain: "checkpoint2.local"
 
+# Variable utilisée dans le fichier de site statique pour afficher ton nom dans la page
+student_fullname: "Ton Prénom Ton Nom"

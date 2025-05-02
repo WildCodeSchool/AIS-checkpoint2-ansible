@@ -43,11 +43,11 @@
     label: "{{ item }}"
   vars:
     generate_ssl_key_csr_subject_alt_names: "{{ hostvars[item].generate_ssl_key_csr_subject_alt_names }}"
-    generate_ssl_key_csr_country: "{{ hostvars[item].generate_ssl_key_csr_country | default('FR') }}"
-    generate_ssl_key_csr_locality: "{{ hostvars[item].generate_ssl_key_csr_locality | default('Montpellier') }}"
-    generate_ssl_key_csr_organization: "{{ hostvars[item].generate_ssl_key_csr_organization | default('checkpoint2.local') }}"
-    generate_ssl_key_csr_organizational_unit: "{{ hostvars[item].generate_ssl_key_csr_organizational_unit | default('WEB') }}"
-    generate_ssl_key_csr_domain: "{{ hostvars[item].generate_ssl_key_csr_domain | default('checkpoint2.local') }}"
+    generate_ssl_key_csr_country: "{{ hostvars[item].generate_ssl_key_csr_country }}"
+    generate_ssl_key_csr_locality: "{{ hostvars[item].generate_ssl_key_csr_locality }}"
+    generate_ssl_key_csr_organization: "{{ hostvars[item].generate_ssl_key_csr_organization }}"
+    generate_ssl_key_csr_organizational_unit: "{{ hostvars[item].generate_ssl_key_csr_organizational_unit }}"
+    generate_ssl_key_csr_domain: "{{ hostvars[item].generate_ssl_key_csr_domain }}"
 
 
 - name: Générer la CSR en utilisant le fichier .cnf

@@ -1,24 +1,44 @@
-.Python
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+pip-selfcheck.json
 [Bb]in
 [Ii]nclude
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
 [Ss]cripts
-pyvenv.cfg
-.venv
+
+# Environnement virtuel Ansible
 ansible-venv/
-pip-selfcheck.json
-.key
-.csr
-.vscode/
-.ansible/
+.venv/
+env/
+venv/
+pyvenv.cfg
+
+# Ansible
 *.retry
 *.log
-__pycache__/
-*.pyc
-*.csr
-*.crt
+*.tar.gz
+*.tar
+*.zip
+*.bak
+*.swp
+*.lock
+.ansible/
+.ansible-lint
+
+# VSCode
+.vscode/
+
+# Fichiers sensibles (certificats, clés privées)
 *.key
+*.crt
+*.cer
+*.csr
+*.pem
+*.p12
 *.cnf
-*.log

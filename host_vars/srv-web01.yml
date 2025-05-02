@@ -1,17 +1,14 @@
 ---
-# Informations du site
+# Définit le répertoire racine où seront stockés les fichiers du site statique à servir via Apache.
 http_host: "srv-web01.checkpoint2.local"
-document_root: "/var/www/html"
+document_root: "/var/www/html/{{ http_host }}"
 
-# Permet de définir les extentions du certificat,
-# permet de préciser les noms de domaine ou alias
-# supplémentaires pour lesquels le certificat sera valide
-# (SAN)
-generate_ssl_key_csr_country: "FR"
-generate_ssl_key_csr_locality: "Montpellier"
-generate_ssl_key_csr_organization: "checkpoint2.local"
-generate_ssl_key_csr_organizational_unit: "WEB"
-generate_ssl_key_csr_domain: "checkpoint2.local"
+# liste des noms DNS ou alias (SAN – Subject Alternative Names) supplémentaires que le certificat SSL doit couvrir, propre à chaque serveur web
 generate_ssl_key_csr_subject_alt_names:
-  - srv-web01.checkpoint2.local
+  - {{ http_host }}
   - srv-web01
+
+# Active ou non le HTTPS pour ce serveur de façon granulaire
+# Contrôle les tâches conditionnelles dans le rôle `deploy_static_site`
+# Passe à true une fois le certificat signé prêt
+deploy_static_site_enable_ssl: false

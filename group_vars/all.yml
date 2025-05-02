@@ -1,7 +1,0 @@
----
-generate_ssl_key_csr_country: "FR"
-generate_ssl_key_csr_locality: "TA VILLE"
-generate_ssl_key_csr_organization: "checkpoint2.local"
-generate_ssl_key_csr_organizational_unit: "WEB"
-generate_ssl_key_csr_domain: "checkpoint2.local"
-generate_ssl_key_csr_email: "TON EMAIL"
