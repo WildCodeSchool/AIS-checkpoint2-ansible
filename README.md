@@ -76,7 +76,7 @@ wilder@ControlNode:~/AIS-checkpoint2-ansible$ source ansible-venv/bin/activate
 (ansible-venv) wilder@ControlNode:~/AIS-checkpoint2-ansible$ pip install -r requirements.txt
 ```
 
-> [!success]
+> ✅ Succès
 > Tu es pret(e) à utiliser le projet
 
 ---
@@ -103,8 +103,7 @@ all:
 
 Fichier d'inventaire déclaré dans `ansible.cfg`.
 
-> [!info] A modifier
-> à modifier :
+> 📝 A modifier
 > * ansible_host:
 > * ansible_ssh_private_key_file:
 
@@ -132,8 +131,7 @@ generate_ssl_key_csr_domain: "checkpoint2.local"
 # Variable utilisée dans le fichier de site statique pour afficher ton nom dans la page
 student_fullname: "Ton Prénom Ton Nom"
 ```
-> [!info] A modifier
-> Variable à modifier :
+> 📝 A modifier
 > * generate_ssl_key_csr_locality:
 > * student_fullname:
 
@@ -159,13 +157,12 @@ generate_ssl_key_csr_subject_alt_names:
 deploy_static_site_enable_ssl: false
 ```
 
-> [!info] A modifier
-> Variable à modifier :
+> 📝 A modifier
 > * http_host:
 > * generate_ssl_key_csr_subject_alt_names:
 > * deploy_static_site_enable_ssl:
 
-> [!todo]
+> ℹ️ To Do
 > Dans le cas ou tu veux déployer plusieurs serveurs web sur plusieurs noeuds, il te faudra dupliquer ce fichier
 > et modifier les valeurs correspondantes à ces autres serveurs web.
 > Tu devras aussi rajouter ces serveurs web dans ton inventaire.
@@ -178,7 +175,7 @@ deploy_static_site_enable_ssl: false
 deploy_static_site_apache_packages:
   - apache2
 ```
-> [!info] A modifier
+> 📝 A modifier
 > Variable à modifier : Aucune
 
 
@@ -190,7 +187,7 @@ generate_ssl_key_csr_key_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/fil
 generate_ssl_key_csr_csr_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/csr"
 generate_ssl_key_csr_cnf_dir: "{{ playbook_dir }}/roles/generate_ssl_key_csr/files/cnf"
 ```
-> [!info] A modifier
+> 📝 A modifier
 > Variable à modifier : Aucune
 
 
@@ -211,7 +208,7 @@ Ce rôle permet de :
 ansible-playbook -i inventory.yml generate_csr.yml
 ```
 
-> [!info]
+> ℹ️ Info
 > Ce playbook est configuré pour cibler les noeuds membre du groupe **webservers** dans ton inventaire
 
 ---
@@ -231,7 +228,7 @@ Ce rôle permet de :
 ansible-playbook -i inventory.yml deploy_static_site.yml --ask-become-pass
 ```
 
-> [!info]
+> ℹ️ Info
 > Ce playbook est configuré pour cibler le noeud local **ControlNode** dans ton inventaire
 
 
@@ -248,7 +245,7 @@ roles/deploy_static_site/files/
 ```
 Le certificat racine (`checkpoint2-rootCA`) pourra aussi etre placé ici, afin de le déployer manuellement sur le système et dans le navigateur de `ControlNode`
 
-> [!attention]
+> ⚠️ Attention
 > **Attention :** Le certificat signé devra etre au format `crt` !
 > Si ton AC a produit un fichier de certificat au format `cer`, il te suffit de modifier son extention :
 > ```bash
@@ -267,7 +264,8 @@ ou
 * https://srv-web01
 
 
-> ⚠️ Assure-toi que le certificat racine est bien installé sur `controlnode` et son navigateur, sinon tu auras une erreur de certificat.
+> ⚠️ Attention
+> Assure-toi que le certificat racine est bien installé sur `controlnode` et son navigateur, sinon tu auras une erreur de certificat.
 
 
 ✅ Résultat attendu :
