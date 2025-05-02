@@ -1,8 +1,4 @@
 ---
-# Informations du site
-http_host: "srv-web01.checkpoint2.local"
-document_root: "/var/www/html"
-
 # Certificats SSL/TLS
 ssl_certificate_path: "/etc/ssl/certs/{{ inventory_hostname }}.crt"
 ssl_certificate_key_path: "/etc/ssl/private/{{ inventory_hostname }}.key"

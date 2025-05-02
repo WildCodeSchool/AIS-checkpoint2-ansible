@@ -33,15 +33,6 @@
   loop_control:
     label: "{{ item }}"
 
-#- name: Générer le fichier .cnf pour chaque hôte web
-#  ansible.builtin.template:
-#    src: csr_config.cnf.j2
-#    dest: "{{ generate_ssl_key_csr_cnf_dir }}/{{ item }}.cnf"
-#    mode: '0644'
-#  loop: "{{ groups['webservers'] }}"
-#  loop_control:
-#    label: "{{ item }}"
-
 - name: Générer le fichier .cnf pour chaque hôte web
   ansible.builtin.template:
     src: csr_config.cnf.j2

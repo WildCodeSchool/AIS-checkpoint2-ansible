@@ -1,5 +1,5 @@
 ---
-apache_packages:
+deploy_static_site_apache_packages:
   - apache2
 deploy_static_site_document_root: "/var/www/{{ http_host }}"
 deploy_static_site_ssl_certificate_path: "/etc/ssl/certs/{{ http_host }}.crt"

@@ -1,8 +1,12 @@
 ---
+# Informations du site
+http_host: "srv-web01.checkpoint2.local"
+document_root: "/var/www/html"
+
 # Permet de définir les extentions du certificat,
 # permet de préciser les noms de domaine ou alias
 # supplémentaires pour lesquels le certificat sera valide
-# host_vars/srv-web01.yml
+# (SAN)
 generate_ssl_key_csr_country: "FR"
 generate_ssl_key_csr_locality: "Montpellier"
 generate_ssl_key_csr_organization: "checkpoint2.local"

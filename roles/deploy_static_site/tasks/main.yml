@@ -31,7 +31,7 @@
 
 - name: Activer le module SSL Apache (si nécessaire)
   when: deploy_static_site_enable_ssl
-  ansible.builtin.apache2_module:
+  community.general.apache2_module:
     name: ssl
     state: present
 
