@@ -209,7 +209,7 @@ ansible-playbook -i inventory.yml generate_csr.yml
 ```
 
 > ℹ️ Info
-> Ce playbook est configuré pour cibler les noeuds membre du groupe **webservers** dans ton inventaire
+> Ce playbook est configuré pour cibler le noeud local **ControlNode** dans ton inventaire
 
 ---
 
@@ -229,7 +229,7 @@ ansible-playbook -i inventory.yml deploy_static_site.yml --ask-become-pass
 ```
 
 > ℹ️ Info
-> Ce playbook est configuré pour cibler le noeud local **ControlNode** dans ton inventaire
+> Ce playbook est configuré pour cibler les noeuds membre du groupe **webservers** dans ton inventaire
 
 
 ---
